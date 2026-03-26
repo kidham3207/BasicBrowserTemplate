@@ -22,17 +22,71 @@ class MainActivity : AppCompatActivity() {
         webView = findViewById(R.id.webView)
 
 
-        goButton.setOnClickListener {
-            val url = urlEditText.text.toString()
-            webView.loadUrl(url)
-        }
 
-        // Allow your browser to intercept hyperlink clicks
+
+
         webView.webViewClient = object: WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+
+
+
+
+        // Allow your browser to intercept hyperlink clicks
+
+
+//                if(url != null) {
+//                    var n = 5
+//                    if(url.take(n) != "https" && url.take(n-1) != "http") {
+//                        var newUrl = checkInput(url)
+//                        webView.loadUrl(newUrl)
+//                        urlEditText.text = newUrl
+//                    }
+//
+//                }
+
+
+
+
+
             }
         }
 
+        goButton.setOnClickListener {
+            var url = urlEditText.text.toString()
+            var newUrl = fixUrl(url)
+            //webView.loadUrl(url)
+//            if( url.startsWith("https://")){
+//
+//                webView.loadUrl(url)
+//            }
+//            else{
+//                urlEditText.setText("https://$url")
+//                webView.loadUrl(("https://$url"))
+//            }
+            webView.loadUrl(newUrl)
+            urlEditText.setText(newUrl)
+
+
+        }
+
+
     }
+
+    fun fixUrl(url : String) : String{
+        if(url.startsWith("http")){
+            return url
+        }
+        else{
+            return "https://$url"
+        }
+    }
+//
+//    fun checkInput(url : String) : String{
+//        if(url.take(5) != "https") {
+//            return "https://" + url
+//        }
+//        return url
+//    }
+
 }
